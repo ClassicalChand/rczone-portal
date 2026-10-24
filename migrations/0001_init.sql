@@ -1,0 +1,23 @@
+CREATE TABLE IF NOT EXISTS users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT NOT NULL UNIQUE,
+  password_hash TEXT NOT NULL,
+  role TEXT NOT NULL CHECK(role IN ('admin','retailer')),
+  display_name TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'active' CHECK(status IN ('active','disabled')),
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE IF NOT EXISTS sessions (
+  token_hash TEXT PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  expires_at INTEGER NOT NULL,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE IF NOT EXISTS service_requests (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL REFERENCES users(id),
+  service TEXT NOT NULL,
+  note TEXT NOT NULL DEFAULT '',
+  status TEXT NOT NULL DEFAULT 'pending',
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
