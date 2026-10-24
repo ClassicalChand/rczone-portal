@@ -1,0 +1,13 @@
+name = "rczone"
+main = "src/index.js"
+compatibility_date = "2026-10-19"
+
+# Serve the existing static portal files from this folder.
+[assets]
+directory = "."
+binding = "ASSETS"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "rczone-db"
+database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
